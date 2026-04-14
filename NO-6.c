@@ -1,24 +1,43 @@
+
 #include <stdio.h>
 
 int main() {
-    int n, i;
+    FILE *f1, *f2, *f3;
+    int num, i;
 
-    printf("Enter the number of elements: ");
-    scanf("%d", &n);
+    f1 = fopen("DATA.txt", "w");
+    if (f1 == NULL) {
+        printf("Error opening DATA.txt\n");
+        return 1;
+    }
+    for (i = 1; i <= 10; i++) {
+        fprintf(f1, "%d\n", i);
+    }
+    fclose(f1);
 
-    int arr[n];
+    f1 = fopen("DATA.txt", "r");
+    f2 = fopen("ODD.txt", "w");
+    f3 = fopen("EVEN.txt", "w");
 
-    for (i = 0; i < n; i++) {
-        printf("Enter element %d: ", i + 1);
-        scanf("%d", &arr[i]);
+    if (f1 == NULL || f2 == NULL || f3 == NULL) {
+        printf("Error opening files for processing\n");
+        return 1;
     }
 
-    printf("\nElements in reverse order: ");
-    for (i = n - 1; i >= 0; i--) {
-        printf("%d ", arr[i]);
+    while (fscanf(f1, "%d", &num) != EOF) {
+        if (num % 2 == 0) {
+            fprintf(f3, "%d\n", num);
+        } else {
+            fprintf(f2, "%d\n", num);
+        }
     }
-    printf("\n");
+
+
+    fclose(f1);
+    fclose(f2);
+    fclose(f3);
+
+    printf("Data successfully separated into ODD.txt and EVEN.txt\n");
 
     return 0;
 }
-

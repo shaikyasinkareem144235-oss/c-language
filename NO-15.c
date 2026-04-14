@@ -1,25 +1,31 @@
-
 #include <stdio.h>
-#include <ctype.h>
 
 int main() {
-    char str[150];
-    int vowels = 0, spaces = 0;
+    FILE *fp;
+    char ch;
 
-    printf("Enter a string: ");
-    fgets(str, sizeof(str), stdin);
+    fp = fopen("demo.txt", "w+");
+    fputs("ABCDEFGHIJ", fp); // Writing 10 characters
 
-    for (int i = 0; str[i] != '\0'; i++) {
-        char c = tolower(str[i]);
-        if (c == 'a' || c == 'e'||c == 'i' ||c == 'o' ||c == 'u') {
-            vowels++;
-        }
-        else if (c == ' ') {
-            spaces++;
-        }
-    }
-    printf("Total Vowels: %d\n", vowels);
-    printf("Total Spaces: %d\n", spaces);
+    // 1. Using ftell() to see current position (should be 10)
+    printf("Current position after writing: %ld\n", ftell(fp));
 
+    // 2. Using fseek() to move 3 bytes from the beginning
+    fseek(fp, 3, SEEK_SET);
+    printf("Position after fseek(3, SEEK_SET): %ld\n", ftell(fp));
+    printf("Character at this position: %c\n", fgetc(fp)); // Reads 'D'
+
+    // 3. Using fseek() to move 2 bytes backward from current position
+    fseek(fp, -2, SEEK_CUR);
+    printf("Position after fseek(-2, SEEK_CUR): %ld\n", ftell(fp));
+    printf("Character at this position: %c\n", fgetc(fp)); // Reads 'C'
+
+    // 4. Using rewind() to go back to the start
+    rewind(fp);
+    printf("Position after rewind(): %ld\n", ftell(fp));
+    printf("First character: %c\n", fgetc(fp)); // Reads 'A'
+
+    fclose(fp);
     return 0;
 }
+

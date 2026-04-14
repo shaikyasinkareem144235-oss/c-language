@@ -1,37 +1,37 @@
 #include <stdio.h>
 
-struct student {
-    int rollno;
-    char name[20];
-    char department[40];
-    int year_of_joining;
-    float score;
-};
-
 int main() {
-    struct student s;
+    FILE *fp;
+    char text[100];
 
-    printf("Enter Roll Number: ");
-    scanf("%d", &s.rollno);
+    fp = fopen("No-1_example.txt", "w");
 
-    printf("Enter Name: ");
-    scanf("%s", s.name);
+    if (fp == NULL) {
+        printf("Error opening file!\n");
+        return 1;
+    }
 
-    printf("Enter Department: ");
-    scanf("%s", s.department);
+    printf("Enter some text: ");
+    fgets(text, sizeof(text), stdin);
 
-    printf("Enter Year of Joining: ");
-    scanf("%d", &s.year_of_joining);
+    fputs(text, fp);
 
-    printf("Enter Score: ");
-    scanf("%f", &s.score);
+    fclose(fp);
 
-    printf("\n--- Student Details ---\n");
-    printf("Roll Number: %d\n", s.rollno);
-    printf("Name: %s\n", s.name);
-    printf("Department: %s\n", s.department);
-    printf("Year of Joining: %d\n", s.year_of_joining);
-    printf("Score: %.2f\n", s.score);
+    fp = fopen("No-1_example.txt", "r");
+
+    if (fp == NULL) {
+        printf("Error opening file!\n");
+        return 1;
+    }
+
+    printf("\nContent of the file:\n");
+
+    while (fgets(text, sizeof(text), fp) != NULL) {
+        printf("%s", text);
+    }
+
+    fclose(fp);
 
     return 0;
 }

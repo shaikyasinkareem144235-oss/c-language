@@ -1,27 +1,39 @@
 #include <stdio.h>
 
 int main() {
-    int n, i;
-    float num, sum = 0, average;
+    FILE *fptr;
+    char ch;
+    int characters = 0, spaces = 0, tabs = 0, lines = 0;
 
-    printf("Enter the number of elements: ");
-    scanf("%d", &n);
+    fptr = fopen("test.txt", "r");
 
-    if (n <= 0) {
-        printf("Invalid input.\n");
+    if (fptr == NULL) {
+        printf("Could not open file.\n");
         return 1;
     }
-  for (i = 1; i <= n; i++) {
-        printf("Enter element %d: ", i);
-        scanf("%f", &num);
-        sum += num;
-}
 
-    average = sum / n;
+    while ((ch = fgetc(fptr)) != EOF) {
+        characters++;
 
-    printf("\nTotal: %.4f\n", sum);
-    printf("Average: %.4f\n", average);
+        if (ch == ' ') {
+            spaces++;
+        } else if (ch == '\t') {
+            tabs++;
+        } else if (ch == '\n') {
+            lines++;
+        }
+    }
+
+    if (characters > 0 && ch != '\n') {
+        lines++;
+    }
+
+    fclose(fptr);
+
+    printf("Characters: %d\n", characters);
+    printf("Spaces: %d\n", spaces);
+    printf("Tabs: %d\n", tabs);
+    printf("Lines: %d\n", lines);
 
     return 0;
 }
-

@@ -1,39 +1,31 @@
-#include <stdio.h>
-#include <string.h>
 
-struct student {
-    int rollno;
-    char name[20];
-    char department[40];
-    int year_of_joining;
-    float score;
-};
+#include <stdio.h>
 
 int main() {
-    struct student s[5], temp;
-    int i, j;
+    FILE *sourceFile, *targetFile;
+    char ch;
 
-    for(i = 0; i < 5; i++) {
-        printf("Enter Roll, Name, Dept, Year, Score for student %d:\n", i+1);
-        scanf("%d %s %s %d %f", &s[i].rollno, s[i].name, s[i].department, &s[i].year_of_joining, &s[i].score);
+    sourceFile = fopen("example.txt", "r");
+    if (sourceFile == NULL) {
+        printf("Error: Could not open source file.\n");
+        return 1;
     }
 
-    for(i = 0; i < 5; i++) {
-        for(j = i + 1; j < 5; j++) {
-            if(strcmp(s[i].name, s[j].name) > 0) {
-                temp = s[i];
-                s[i] = s[j];
-                s[j] = temp;
-            }
-        }
+    targetFile = fopen("test.txt", "w");
+    if (targetFile == NULL) {
+        printf("Error: Could not open target file.\n");
+        fclose(sourceFile);
+        return 1;
     }
 
-    printf("\n %-15s %-10s %-15s %-10s\n", "NAME", "ROLL NO", "DEPT", "SCORE");
-    printf("------------------------------------------------------------\n");
-
-    for(i = 0; i < 5; i++) {
-        printf("%-15s %-10d %-15s %-10.2f\n", s[i].name, s[i].rollno, s[i].department, s[i].score);
+    while ((ch = fgetc(sourceFile)) != EOF) {
+        fputc(ch, targetFile);
     }
+
+    printf("File copied successfully.\n");
+
+    fclose(sourceFile);
+    fclose(targetFile);
 
     return 0;
 }

@@ -1,36 +1,39 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-struct Date
-{
-    int day;
-    int month;
-    int year;
-};
+int main() {
+    FILE *fp, *temp;
+    char ch, filename[100];
 
-struct Student
-{
-    int roll;
-    char name[30];
-    struct Date dob;
-};
+    printf("Enter filename: ");
+    scanf("%s", filename);
 
-int main()
-{
-    struct Student s;
+    fp = fopen(filename, "r");
+    temp = fopen("temp.dat", "w");
 
-    printf("Enter Roll Number: ");
-    scanf("%d", &s.roll);
+    if (fp == NULL || temp == NULL) {
+        printf("Error opening file!");
+        return 1;
+    }
 
-    printf("Enter Name: ");
-    scanf("%s", s.name);
+    while ((ch = fgetc(fp)) != EOF) {
+        if (ch == 'a') {
+            fputc('x', temp);
+        } else if (ch == 'A') {
+            fputc('X', temp);
+        } else {
+            fputc(ch, temp);
+        }
+    }
 
-    printf("Enter Date of Birth (day month year): ");
-    scanf("%d %d %d", &s.dob.day, &s.dob.month, &s.dob.year);
+    fclose(fp);
+    fclose(temp);
 
-    printf("\nStudent Details:\n");
-    printf("Roll No: %d\n", s.roll);
-    printf("Name: %s\n", s.name);
-    printf("DOB: %d/%d/%d\n", s.dob.day, s.dob.month, s.dob.year);
+    remove(filename);
+    rename("temp.dat", filename);
+
+    printf("Replacement successful.\n");
 
     return 0;
 }
+
