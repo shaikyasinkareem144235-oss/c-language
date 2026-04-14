@@ -1,24 +1,19 @@
 #include <stdio.h>
+#include <ctype.h>
 
 int main() {
-    FILE *fp;
-    char filename[100];
-    long size;
+    char str[100];
+    int i = 0;
 
-    printf("Enter filename: ");
-    scanf("%s", filename);
+    printf("Enter a string: ");
+    gets(str);
 
-    fp = fopen(filename, "rb");
-    if (fp == NULL) {
-        printf("File not found!\n");
-        return 1;
+    while (str[i]) {
+        str[i] = toupper(str[i]);
+        i++;
     }
 
-    fseek(fp, 0L, SEEK_END);
-    size = ftell(fp);
-    fclose(fp);
-
-    printf("Size of the file is %ld bytes.\n", size);
+    printf("Uppercase string: %s\n", str);
 
     return 0;
 }

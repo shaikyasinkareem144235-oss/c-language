@@ -1,38 +1,16 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <string.h>
 
 int main() {
-    FILE *fp, *temp;
-    char ch, filename[100];
+    char s1[100], s2[50];
 
-    printf("Enter filename: ");
-    scanf("%s", filename);
+    printf("Enter first string: ");
+    gets(s1);
+    printf("Enter second string: ");
+    gets(s2);
+    strcat(s1, s2);
 
-    fp = fopen(filename, "r");
-    temp = fopen("temp.dat", "w");
-
-    if (fp == NULL || temp == NULL) {
-        printf("Error opening file!");
-        return 1;
-    }
-
-    while ((ch = fgetc(fp)) != EOF) {
-        if (ch == 'a') {
-            fputc('x', temp);
-        } else if (ch == 'A') {
-            fputc('X', temp);
-        } else {
-            fputc(ch, temp);
-        }
-    }
-
-    fclose(fp);
-    fclose(temp);
-
-    remove(filename);
-    rename("temp.dat", filename);
-
-    printf("Replacement successful.\n");
+    printf("Concatenated string: %s\n", s1);
 
     return 0;
 }

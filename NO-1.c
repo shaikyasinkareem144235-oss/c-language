@@ -1,37 +1,21 @@
 #include <stdio.h>
 
+void swap(int *ptr1, int *ptr2) {
+    int temp;
+    temp = *ptr1;
+    *ptr1 = *ptr2;
+    *ptr2 = temp;
+}
+
 int main() {
-    FILE *fp;
-    char text[100];
+    int x = 10, y = 20;
 
-    fp = fopen("No-1_example.txt", "w");
+    printf("Before swap: x = %d, y = %d\n", x, y);
 
-    if (fp == NULL) {
-        printf("Error opening file!\n");
-        return 1;
-    }
+    swap(&x, &y);
 
-    printf("Enter some text: ");
-    fgets(text, sizeof(text), stdin);
-
-    fputs(text, fp);
-
-    fclose(fp);
-
-    fp = fopen("No-1_example.txt", "r");
-
-    if (fp == NULL) {
-        printf("Error opening file!\n");
-        return 1;
-    }
-
-    printf("\nContent of the file:\n");
-
-    while (fgets(text, sizeof(text), fp) != NULL) {
-        printf("%s", text);
-    }
-
-    fclose(fp);
+    printf("After swap:  x = %d, y = %d\n", x, y);
 
     return 0;
 }
+

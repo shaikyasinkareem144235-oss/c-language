@@ -1,15 +1,23 @@
+
 #include <stdio.h>
+#include <string.h>
 
-int main(int argc, char *argv[]) {
-    int i;
+int main() {
+    char str[100], temp;
+    int i, n;
 
-    printf("Total number of arguments: %d\n", argc);
-    printf("List of arguments:\n");
+    printf("Enter a string: ");
+    gets(str);
 
-    for (i = 0; i < argc; i++) {
-        printf("Argument %d: %s\n", i, argv[i]);
+    n = strlen(str);
+
+    for (i = 0; i < n / 2; i++) {
+        temp = str[i];
+        str[i] = str[n - 1 - i];
+        str[n - 1 - i] = temp;
     }
+
+    printf("Reversed string: %s\n", str);
 
     return 0;
 }
-

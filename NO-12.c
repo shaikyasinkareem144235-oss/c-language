@@ -1,32 +1,20 @@
 #include <stdio.h>
+#include <ctype.h>
 
 int main() {
-    FILE *f1, *f2;
-    int num, rev = 0, rem;
+    char str[100];
+    int i = 0;
 
-    f1 = fopen("input.txt", "r");
-    f2 = fopen("output.txt", "w");
+    printf("Enter a string: ");
+    gets(str);
 
-    if (f1 == NULL || f2 == NULL) {
-        printf("Error opening files!");
-        return 1;
+    while (str[i]) {
+
+        str[i] = tolower(str[i]);
+        i++;
     }
 
-    if (fscanf(f1, "%d", &num) == 1) {
-        int temp = num;
-        while (temp != 0) {
-            rem = temp % 10;
-            rev = rev * 10 + rem;
-            temp /= 10;
-        }
-        fprintf(f2, "%d", rev);
-        printf("Number reversed and saved to output.txt\n");
-    } else {
-        printf("No valid number found in input.txt\n");
-    }
-
-    fclose(f1);
-    fclose(f2);
+    printf("Lowercase string: %s\n", str);
 
     return 0;
 }
